@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#b4a7d6</color>
+    <color name="colorPrimaryDark">#8e7cc3</color>
+    <color name="colorAccent">#b6d7a8</color>
+
+    <color name="primaryTextColor">#351c75</color>
+    <color name="secondaryTextColor">#fff</color>
+    <color name="ascentTextColor">#93c47d</color>
+
+    <color name="ultralight">#e0daf2</color>
+    <color name="darkone">#b4a7d6</color>  <!--ColorPrimary-->
+    <color name="darktwo">#8e7cc3</color>  <!--ColorPrimaryDark-->
+    <color name="darkthree">#674ea7</color>
+    <color name="darkfour">#351c75</color>
+    <color name="ultradark">#20124d</color>
+
+
+    <color name="ultralightAccent">#e0daf2</color>
+    <color name="darkoneAccent">#b6d7a8</color>  <!--ColorAccent-->
+    <color name="darktwoAccent">#93c47d</color>
+    <color name="darkthreeAccent">#6aa84f</color>
+    <color name="darkfourAccent">#38761d</color>
+    <color name="ultradarkAccent">#274e13</color>
+
+</resources>

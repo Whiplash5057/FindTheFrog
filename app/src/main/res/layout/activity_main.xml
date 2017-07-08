@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/background_gradient"
+    tools:context="in.devdesk.findthefrog.LoginSignUp.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/frag_container_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="80dp"
+        android:layout_gravity="center"
+        android:layout_weight="4"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/lbl_signup_gotosinuplogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loginSignup_btn_txt"
+            android:layout_alignParentBottom="true"
+            style="@style/button_style" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

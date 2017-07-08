@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="numberOfTabs" >3</integer>
+
+    <dimen name="smallIconWidth">6dp</dimen>
+    <dimen name="mediumIconWidthHeight">8dp</dimen>
+    <dimen name="largeIconWidthHeight">21dp</dimen>
+
+    <dimen name="largeText">30sp</dimen>
+    <dimen name="mediumText">20sp</dimen>
+    <dimen name="smallText">16sp</dimen>
+
+    <dimen name="largeMarginOrPadding">20dp</dimen>
+    <dimen name="mediumMarginOrPadding">10dp</dimen>
+    <dimen name="smallMarginOrPadding">2dp</dimen>
+
+    <item name="highAlpha" format="float" type="dimen">0.8</item>
+    <item name="mediumAlpha" format="float" type="dimen">0.6</item>
+    <item name="lowAlpha" format="float" type="dimen">0.4</item>
+
+</resources>

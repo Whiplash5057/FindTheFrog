@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Find The Frog</string>
+
+
+
+    <!-- Right from ShortWalk start -->
+
+    <string name="enter_location_hint">Enter a location</string>
+    <string name="enter_location_type_hint">Type of location ( Future Update )</string>
+    <string name="home_current_location_hint">Home / Base</string>
+    <string name="home_current_location_confirm">Confirm</string>
+    <string name="map_msg">Click on a location to find out the address. \n Longpress on a location to save a new walk, or complete a challenge!!!</string>
+    <string name="number_of_weeks">Number of weeks</string>
+    <string name="longest_streak">Longest streak</string>
+    <string name="lst_wlk_addr">Andrews\'s house, Far far away, Everland</string>
+    <string name="nxt_wlk_addr">Richard\'s house, Far far away, Neverland</string>
+    <string name="lst_wlk_title">Days been since last walk"</string>
+    <string name="nxt_wlk_title">Days before next walk</string>
+    <string name="user_locn">Your Location</string>
+    <string name="user_home_locn">Home / Base</string>
+    <string name="incomplete_locn">Incomplete Walk</string>
+    <string name="complete_locn">Complete Walk</string>
+    <string name="set_home_locn">SET YOUR ( BASE ) LOCATION.</string>
+
+    <string name="slide_1_title">Welcome to ShortWalk</string>
+    <string name="slide_1_description">An easy way to get out of your comfort zone and experience the world around you</string>
+    <string name="slide_2_title">Workaholic to Marveled</string>
+    <string name="slide_2_description">Explore your vicinity and make it a habit to find new places.</string>
+    <string name="slide_3_title">Uninspired to Enamoured</string>
+    <string name="slide_3_description">All you have to do is select a location and get there in a week to earn walk-points to compete with yourself and the world.</string>
+    <string name="slide_4_title">Sedentary to JourneyMen</string>
+    <string name="slide_4_description">After a week your walk will get destroyed and you\'ll lose points. \n So be judicious when selecting a location.</string>
+    <string name="slide_5_title">Enervate to Energise</string>
+    <string name="slide_5_description">Select locations on the map. Swipe left to moniter your progress. Swipe right to see how others are doing.</string>
+
+    <string name="loginSignup_btn_txt">New to ShortWalk? Sign Up!!!</string>
+    <string name="signup_btn_hint">Sign Up</string>
+    <string name="login_btn_hint">Log In</string>
+    <string name="password_et_hint">Password</string>
+    <string name="email_et_hint">Email</string>
+    <string name="username_et_hint">Username</string>
+
+    <string-array name="locationTypes">
+        <item>Bars</item>
+        <item>Restaurants</item>
+        <item>Pubs</item>
+        <item>Malls</item>
+        <item>Cafes</item>
+        <item>Zoos</item>
+        <item>Hills</item>
+        <item>Archeds</item>
+        <item>Concerts</item>
+    </string-array>
+    <string name="alertLocationTypeTitle"> Select your fancied location </string>
+
+    <!-- Right from ShortWalk end -->
+
+
+
+
+
+</resources>
