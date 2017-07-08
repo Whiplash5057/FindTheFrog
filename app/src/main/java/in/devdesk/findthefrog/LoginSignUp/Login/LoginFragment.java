@@ -36,7 +36,6 @@ public class LoginFragment extends Fragment implements Login_MVP.View{
     HashMap<String, String> loginDetailsReturn = new HashMap<>();
 
 
-
     //-- data binding
     @BindView(R.id.et_login_loginpage)
     EditText usernameView;

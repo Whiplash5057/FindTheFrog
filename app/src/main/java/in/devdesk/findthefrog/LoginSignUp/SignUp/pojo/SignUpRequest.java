@@ -26,7 +26,7 @@ public class SignUpRequest {
         return email;
     }
 
-    public SignUpRequest(String username, String password, String email) {
+    public SignUpRequest(String username, String email, String password) {
         this.username = username;
         this.password = password;
         this.email = email;

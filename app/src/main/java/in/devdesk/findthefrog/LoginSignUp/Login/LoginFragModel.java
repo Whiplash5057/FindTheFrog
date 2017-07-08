@@ -67,7 +67,7 @@ public class LoginFragModel implements Login_MVP.Model {
                         case 402:
                             Log.e("Error 402", "Enter your correct username and password'");
                             loginDetailsModified.put("response", "error");
-                            loginDetailsModified.put("message", "Enter your correct username and password");
+                            loginDetailsModified.put("message", "Enter correct details");
                             break;
                         default:
                             loginDetailsModified.put("response", "error");

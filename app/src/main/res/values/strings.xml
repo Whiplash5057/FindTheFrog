@@ -2,7 +2,6 @@
     <string name="app_name">Find The Frog</string>
 
 
-
     <!-- Right from ShortWalk start -->
 
     <string name="enter_location_hint">Enter a location</string>
@@ -40,8 +39,9 @@
     <string name="email_et_hint">Email</string>
     <string name="username_et_hint">Username</string>
 
-    <string name="username_tv_error">Username already exists. Sorry!!</string>
-    <string name="passowrd_tv_error">Make sure your password is more than 5 characters.</string>
+    <string name="username_tv_error">Username must me longer than 5 characters</string>
+    <string name="email_tv_error">Invalid email.</string>
+    <string name="passowrd_tv_error">Make sure your password is longer than 5 characters.</string>
     <string name="network_tv_error">Internet needed to login. Obviously!!</string>
 
     <string-array name="locationTypes">
@@ -58,9 +58,6 @@
     <string name="alertLocationTypeTitle"> Select your fancied location </string>
 
     <!-- Right from ShortWalk end -->
-
-
-
 
 
 </resources>

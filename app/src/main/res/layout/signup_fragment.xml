@@ -1,50 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/molecule"
+        android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:layout_weight="1"/>
+        android:src="@drawable/molecule" />
 
     <TextView
+        style="@style/textview_style_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="25sp"
-        style="@style/textview_style_new"/>
+        android:textSize="25sp" />
 
-
-    <EditText
-        android:id="@+id/userName"
+    <TextView
+        android:id="@+id/tv_signup_interneterror"
+        style="@style/textviewerror_style_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username_et_hint"
-        style="@style/editText_style"/>
+        android:text="@string/network_tv_error"
+        android:textSize="@dimen/smallText"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/et_username_signuppage"
+        style="@style/editText_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/username_et_hint" />
+
+    <TextView
+        android:id="@+id/tv_username_signuppage"
+        style="@style/textviewerror_style_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/username_tv_error"
+        android:textSize="@dimen/smallText"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/et_email_signuppage"
+        style="@style/editText_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:hint="@string/email_et_hint"
-        style="@style/editText_style"/>
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/tv_email_signuppage"
+        style="@style/textviewerror_style_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/email_tv_error"
+        android:textSize="@dimen/smallText"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/et_passowrd_signuppage"
+        style="@style/editText_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:hint="@string/password_et_hint"
-        style="@style/editText_style"/>
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/tv_password_signuppage"
+        style="@style/textviewerror_style_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/passowrd_tv_error"
+        android:textSize="@dimen/smallText"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_signup_signuppage"
+        style="@style/button_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/signup_btn_hint"
-        style="@style/button_style" />
+        android:text="@string/signup_btn_hint" />
 </LinearLayout>

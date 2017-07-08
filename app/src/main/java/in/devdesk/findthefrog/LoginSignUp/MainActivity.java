@@ -1,5 +1,8 @@
 package in.devdesk.findthefrog.LoginSignUp;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setLoginFragment("login");
     }
+
 
     private void setLoginFragment(String fragSelection) {
         FragmentManager manager = getSupportFragmentManager();
