@@ -37,9 +37,14 @@
         <item name="android:padding">@dimen/mediumMarginOrPadding</item>
     </style>
 
+    <style name="textviewerror_style_new">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ascentTextColor</item>
+        <item name="android:padding">@dimen/smallMarginOrPadding</item>
+    </style>
+
     <style name="background_gradient">
         <item name="android:background">@drawable/gradient_background</item>
-
     </style>
     <!-- Mostly for the login signup page -->
 

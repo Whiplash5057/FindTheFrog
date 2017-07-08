@@ -6,7 +6,7 @@ package in.devdesk.findthefrog.LoginSignUp.Login;
 
 public class LoginFragPresenter implements Login_MVP.Presenter {
 
-    LoginFragment loginFragment;
+    private LoginFragment loginFragment;
 
     public LoginFragPresenter(LoginFragment loginFragment) {
         this.loginFragment = loginFragment;

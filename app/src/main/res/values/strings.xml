@@ -22,7 +22,7 @@
     <string name="complete_locn">Complete Walk</string>
     <string name="set_home_locn">SET YOUR ( BASE ) LOCATION.</string>
 
-    <string name="slide_1_title">Welcome to ShortWalk</string>
+    <string name="slide_1_title">Welcome to FindTheFrog</string>
     <string name="slide_1_description">An easy way to get out of your comfort zone and experience the world around you</string>
     <string name="slide_2_title">Workaholic to Marveled</string>
     <string name="slide_2_description">Explore your vicinity and make it a habit to find new places.</string>
@@ -33,12 +33,16 @@
     <string name="slide_5_title">Enervate to Energise</string>
     <string name="slide_5_description">Select locations on the map. Swipe left to moniter your progress. Swipe right to see how others are doing.</string>
 
-    <string name="loginSignup_btn_txt">New to ShortWalk? Sign Up!!!</string>
+    <string name="loginSignup_btn_txt">New to FindTheFrog? Sign Up!!!</string>
     <string name="signup_btn_hint">Sign Up</string>
     <string name="login_btn_hint">Log In</string>
     <string name="password_et_hint">Password</string>
     <string name="email_et_hint">Email</string>
     <string name="username_et_hint">Username</string>
+
+    <string name="username_tv_error">Username already exists. Sorry!!</string>
+    <string name="passowrd_tv_error">Make sure your password is more than 5 characters.</string>
+    <string name="network_tv_error">Internet needed to login. Obviously!!</string>
 
     <string-array name="locationTypes">
         <item>Bars</item>
