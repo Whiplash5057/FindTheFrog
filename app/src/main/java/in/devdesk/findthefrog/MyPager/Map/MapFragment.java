@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -24,13 +23,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -46,7 +45,6 @@ import in.devdesk.findthefrog.HeLpEr.MapHelperClasses;
 import in.devdesk.findthefrog.HeLpEr.Utils;
 import in.devdesk.findthefrog.R;
 
-import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.AUTHTOKEN;
 import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.LATITUDE;
 import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.LOGINSHAREDP;
 import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.LONGITUDE;
@@ -58,12 +56,13 @@ import static in.devdesk.findthefrog.HeLpEr.Utils.isNetworkAvailable;
  * Created by richardandrews on 09/07/17.
  */
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP.View {
 
     //-- blind strings
     private GoogleMap mGoogleMaps;
     private MapHelperClasses mapHelperClasses;
-    Animation animPopup;
+    Animation animPopupEnter;
+    Animation animPopupExit;
     private String homeLocn;
     private LocationManager locationManager;
     private Boolean locationCheck = true;
@@ -114,7 +113,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onActivityCreated(savedInstanceState);
 
         //-- animation setup
-        animPopup= AnimationUtils.loadAnimation(getActivity(),R.anim.bouncing_animation);
+        animPopupEnter= AnimationUtils.loadAnimation(getActivity(),R.anim.bounce_animation);
+        animPopupExit = AnimationUtils.loadAnimation(getActivity(),R.anim.unbouncing_animation);
         setHomeLayout.setAlpha(0);
 
 
@@ -147,7 +147,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         //-- animation
         setHomeLayout.setAlpha(1);
-        setHomeLayout.startAnimation(animPopup);
+        setHomeLayout.startAnimation(animPopupEnter);
 
         //-- initialise the map
         initializeMap();
@@ -163,7 +163,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 latLong.put("latitude", location.getLatitude());
                 latLong.put("longitude", location.getLongitude());
                 setUpMapLocation(latLong.get("latitude"), latLong.get("longitude"), 2);
-
             }
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -189,12 +188,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
                 if(!sharedPrefs.contains(LATITUDE) && isNetworkAvailable(getActivity()))
                 {
-                    SharedPreferences.Editor ed = sharedPrefs.edit();
-                    Utils.putDouble(ed, LATITUDE, latLng.latitude);
-                    Utils.putDouble(ed, LONGITUDE, latLng.longitude);
-                    ed.apply();
+
+                    String username = sharedPrefs.getString(USERNAME, "wrongUser");
                     setUpMapLocation(latLng.latitude, latLng.longitude, 1);
-                    Toast.makeText(getActivity(), "wrong", Toast.LENGTH_SHORT).show();
+                    updateHomeLocationInServer(latLng.latitude, latLng.longitude, username);
                 }
                 else
                 {
@@ -204,6 +201,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+    }
+
+    private void updateHomeLocationInServer(double latitude, double longitude, String username) {
+        MapFragPresenter loginFragPresenter = new MapFragPresenter(this);
+        loginFragPresenter.sendLatLngToApi( latitude, longitude, username);
     }
 
     private void initializeMap() {
@@ -267,6 +269,51 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         Toast.makeText(getActivity(), latitude + " " + longitude + " " + locationType, Toast.LENGTH_SHORT).show();
         mGoogleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
+    }
+
+    @Override
+    public void showResponseValue(double lat, double lng, String message) {
+        String responseMessage;
+        if(message == "success")
+        {
+            SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
+            SharedPreferences.Editor ed = sharedPrefs.edit();
+            Utils.putDouble(ed, LATITUDE, lat);
+            Utils.putDouble(ed, LONGITUDE, lng);
+            ed.apply();
+            responseMessage = "Awesome, you have a home in the app:-)";
+            setHomeLayout.startAnimation(animPopupExit);
+            animPopupExit.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    setHomeLayout.setAlpha(0);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+        else
+        {
+            responseMessage = "Sorry, something went wrong:-(";
+        }
+        Snackbar snackbar = Snackbar.make(setHomeBtn , responseMessage, Snackbar.LENGTH_SHORT);
+//        snackbar.addCallback(new Snackbar.Callback(){
+//
+//        });
+        View sb = snackbar.getView();
+        TextView tv = (TextView) sb.findViewById(android.support.design.R.id.snackbar_text);
+        tv.setTextColor(ContextCompat.getColor(getContext(), R.color.ascentTextColor));
+        tv.setHeight(160);
+        tv.setTextSize(18);
+        snackbar.show();
     }
 
     private class GeocoderHandler extends Handler {

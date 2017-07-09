@@ -118,7 +118,7 @@ public class LoginFragment extends Fragment implements Login_MVP.View{
             public void onDismissed(Snackbar snackbar, int event) {
                 if(isNetworkAvailable(getActivity()) && responseStatus == "success")
                 {
-                    Toast.makeText(getActivity(), "Now", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Now", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getActivity(), ParentTab.class));
                     SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP,Context.MODE_PRIVATE);
                     SharedPreferences.Editor ed = sharedPrefs.edit();
