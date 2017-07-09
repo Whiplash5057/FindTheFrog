@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginSignUp.MainActivity" />
-        <activity android:name=".MyIntro"></activity>
+        <activity android:name=".MyIntro" />
+        <activity android:name=".MyPager.ParentTab"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,8 @@
 package in.devdesk.findthefrog.LoginSignUp.Login;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,8 +23,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import in.devdesk.findthefrog.LoginSignUp.MainActivity;
+import in.devdesk.findthefrog.MyPager.ParentTab;
 import in.devdesk.findthefrog.R;
 
+import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.AUTHTOKEN;
+import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.LOGINSHAREDP;
+import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.USERNAME;
 import static in.devdesk.findthefrog.HeLpEr.Utils.isNetworkAvailable;
 
 /**
@@ -31,7 +38,7 @@ import static in.devdesk.findthefrog.HeLpEr.Utils.isNetworkAvailable;
 public class LoginFragment extends Fragment implements Login_MVP.View{
 
     //-- blind strings
-    String username, password;
+    String password, responseStatus, username, responseMessage, responseToken;
     HashMap<String, String> loginDetails = new HashMap<>();
     HashMap<String, String> loginDetailsReturn = new HashMap<>();
 
@@ -96,13 +103,31 @@ public class LoginFragment extends Fragment implements Login_MVP.View{
     @Override
     public void loginTestReturn(Object o) {
         loginDetailsReturn = (HashMap<String, String>) o;
-        String responseStatus = loginDetailsReturn.get("response");
-        String responseMessage = loginDetailsReturn.get("message");
-        String responseToken = "";
+        responseStatus = loginDetailsReturn.get("response");
+        responseMessage = loginDetailsReturn.get("message");
+        username = loginDetailsReturn.get("username");
+        responseToken = "";
         if(responseStatus == "success")
+        {
             responseToken = loginDetailsReturn.get("authToken");
+        }
 
         Snackbar snackbar = Snackbar.make(testBtn, responseMessage, Snackbar.LENGTH_SHORT);
+        snackbar.addCallback(new Snackbar.Callback(){
+            @Override
+            public void onDismissed(Snackbar snackbar, int event) {
+                if(isNetworkAvailable(getActivity()) && responseStatus == "success")
+                {
+                    Toast.makeText(getActivity(), "Now", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), ParentTab.class));
+                    SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP,Context.MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sharedPrefs.edit();
+                    ed.putString(USERNAME, username);
+                    ed.putString(AUTHTOKEN, responseToken);
+                    ed.apply();
+                }
+            }
+        });
         View sb = snackbar.getView();
         TextView tv = (TextView) sb.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(ContextCompat.getColor(getContext(), R.color.ascentTextColor));
@@ -110,4 +135,6 @@ public class LoginFragment extends Fragment implements Login_MVP.View{
         tv.setTextSize(20);
         snackbar.show();
     }
+
+
 }

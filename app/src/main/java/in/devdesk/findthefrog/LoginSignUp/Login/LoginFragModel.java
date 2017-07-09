@@ -55,24 +55,24 @@ public class LoginFragModel implements Login_MVP.Model {
                     int sc = response.code();
                     switch (sc) {
                         case 400:
-                            Log.e("Error 400", "Bad Request");
+//                            Log.e("Error 400", "Bad Request");
                             loginDetailsModified.put("response", "error");
                             loginDetailsModified.put("message", "Bad Request");
                             break;
                         case 404:
-                            Log.e("Error 404", "Not Found");
+//                            Log.e("Error 404", "Not Found");
                             loginDetailsModified.put("response", "error");
                             loginDetailsModified.put("message", "Request Not Found");
                             break;
                         case 402:
-                            Log.e("Error 402", "Enter your correct username and password'");
+//                            Log.e("Error 402", "Enter your correct username and password'");
                             loginDetailsModified.put("response", "error");
                             loginDetailsModified.put("message", "Enter correct details");
                             break;
                         default:
                             loginDetailsModified.put("response", "error");
                             loginDetailsModified.put("message", "Something went wrong");
-                            Log.e("Error", "Generic Error");
+//                            Log.e("Error", "Generic Error");
                     }
                 }
                 loginFragPresenter.sendTestLoginViewBack(loginDetailsModified);

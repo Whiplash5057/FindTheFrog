@@ -1,5 +1,6 @@
 package in.devdesk.findthefrog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import in.devdesk.findthefrog.LoginSignUp.MainActivity;
+import in.devdesk.findthefrog.MyPager.ParentTab;
+
+import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.LOGINSHAREDP;
+import static in.devdesk.findthefrog.HeLpEr.Constants.REFERENCE.USERNAME;
 
 /**
  * Created by richardandrews on 08/07/17.
@@ -41,8 +46,16 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    finish();
+                    SharedPreferences sharedPrefs = getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
+                    if(!sharedPrefs.contains(USERNAME))
+                    {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    }
+                    else
+                    {
+                        startActivity(new Intent(SplashActivity.this, ParentTab.class));
+                    }
                 }
             }
         });

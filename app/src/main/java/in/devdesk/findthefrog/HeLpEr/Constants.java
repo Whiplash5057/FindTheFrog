@@ -15,7 +15,9 @@ public class Constants {
     }
 
     public static final class REFERENCE {
-//        public static final String  ITEM = Config.PACKAGE_NAME + "item";
+        public static final String  LOGINSHAREDP = Config.PACKAGE_NAME + "loginSharedPreference";
+        public static final String USERNAME = "username";
+        public static final String AUTHTOKEN = "authToken";
     }
 
     public static final class Config {
