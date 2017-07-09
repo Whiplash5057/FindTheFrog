@@ -72,12 +72,14 @@ public class ParentTab extends AppCompatActivity {
         tabLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         tabLayout.setSelectedTabIndicatorHeight(15);
     }
+
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new ProfileFragment(), "PROFILEfragment");
         adapter.addFrag(new MapFragment(),"MAPfragment");
         adapter.addFrag(new OtherFragment(), "OTHERfragment");
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter{

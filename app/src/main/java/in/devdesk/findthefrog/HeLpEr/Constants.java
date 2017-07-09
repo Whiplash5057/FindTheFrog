@@ -18,6 +18,9 @@ public class Constants {
         public static final String  LOGINSHAREDP = Config.PACKAGE_NAME + "loginSharedPreference";
         public static final String USERNAME = "username";
         public static final String AUTHTOKEN = "authToken";
+        public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+        public static final String LATITUDE = "latitude";
+        public static final String LONGITUDE = "longitude";
     }
 
     public static final class Config {

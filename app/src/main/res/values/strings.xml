@@ -8,6 +8,7 @@
     <string name="enter_location_type_hint">Type of location ( Future Update )</string>
     <string name="home_current_location_hint">Home / Base</string>
     <string name="home_current_location_confirm">Confirm</string>
+    <string name="home_current_location_search">Search</string>
     <string name="map_msg">Click on a location to find out the address. \n Longpress on a location to save a new walk, or complete a challenge!!!</string>
     <string name="number_of_weeks">Number of weeks</string>
     <string name="longest_streak">Longest streak</string>
@@ -19,7 +20,7 @@
     <string name="user_home_locn">Home / Base</string>
     <string name="incomplete_locn">Incomplete Walk</string>
     <string name="complete_locn">Complete Walk</string>
-    <string name="set_home_locn">SET YOUR ( BASE ) LOCATION.</string>
+    <string name="set_home_locn">Set your (Base) Home by longPressing the location on the map.</string>
 
     <string name="slide_1_title">Welcome to FindTheFrog</string>
     <string name="slide_1_description">An easy way to get out of your comfort zone and experience the world around you</string>
@@ -56,8 +57,13 @@
         <item>Concerts</item>
     </string-array>
     <string name="alertLocationTypeTitle"> Select your fancied location </string>
+    <string name="title_activity_maps">Map</string>
 
     <!-- Right from ShortWalk end -->
+
+    <string name="ok">OK</string>
+    <string name="text_location_permission">The app predominantly works on your location. The app won\'t work without it.å</string>
+    <string name="title_location_permission">Allow location permissions.</string>
 
 
 </resources>

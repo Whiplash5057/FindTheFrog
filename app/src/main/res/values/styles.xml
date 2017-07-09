@@ -48,4 +48,16 @@
     </style>
     <!-- Mostly for the login signup page -->
 
+
+    <!-- Mostly from shortwalk -->
+    <style name="mainRectanglesWithoutElevation">
+        <item name="android:background">@drawable/rectangle</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+
+    <!-- Mostly from shortwalk -->
+
+
+
 </resources>
