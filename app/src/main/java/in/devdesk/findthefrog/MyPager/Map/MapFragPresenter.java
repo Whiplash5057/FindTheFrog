@@ -24,4 +24,15 @@ public class MapFragPresenter implements Map_MVP.Presenter{
     public void returnLatLngResponse(double lat, double lng, String message) {
         mapFragment.showResponseValue(lat, lng, message);
     }
+
+    @Override
+    public void sendnewFrogLatLngToApi(double lat, double lng, String username) {
+        MapFragModel mapFragModel = new MapFragModel(this);
+        mapFragModel.acceptFrogLatLngToApi(lat, lng, username);
+    }
+
+    @Override
+    public void returnFrogLatLngResponse(double lat, double lng, String message, String newFrogLocationId) {
+        mapFragment.showFrogLatLngResponse(lat, lng, message, newFrogLocationId);
+    }
 }

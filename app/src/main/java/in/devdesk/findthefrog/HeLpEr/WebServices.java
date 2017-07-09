@@ -6,6 +6,8 @@ import in.devdesk.findthefrog.LoginSignUp.SignUp.pojo.SignUpRequest;
 import in.devdesk.findthefrog.LoginSignUp.SignUp.pojo.SignUpResponse;
 import in.devdesk.findthefrog.MyPager.Map.pojo.MapHomeUpdateRequest;
 import in.devdesk.findthefrog.MyPager.Map.pojo.MapHomeUpdateResponse;
+import in.devdesk.findthefrog.MyPager.Map.pojo.MapNewFrogRequest;
+import in.devdesk.findthefrog.MyPager.Map.pojo.MapNewFrogResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -25,5 +27,8 @@ public interface WebServices {
 
     @PUT("api/updateHomeLocation")
     Call<MapHomeUpdateResponse> updateAccountLocation(@Body MapHomeUpdateRequest mapHomeUpdateRequest);
+
+    @PUT("api/addNewLocation")
+    Call<MapNewFrogResponse.MainPojo> addNewFrogLocation(@Body MapNewFrogRequest mapNewFrogRequest);
 
 }

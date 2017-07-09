@@ -54,7 +54,10 @@
         <item name="android:background">@drawable/rectangle</item>
         <item name="android:layout_margin">5dp</item>
     </style>
-
+    <style name="mainRectangles">
+        <item name="android:background">@drawable/rectangle</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
 
     <!-- Mostly from shortwalk -->
 

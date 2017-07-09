@@ -6,16 +6,66 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapv_map_mapfrag"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-    </com.google.android.gms.maps.MapView>
+    <LinearLayout
+        style="@style/mainRectangles"
+        android:elevation="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_gravity="bottom"
+        android:alpha="0.95"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:padding="@dimen/largeMarginOrPadding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/set_frog_locn"
+            android:textSize="@dimen/smallText"
+            android:gravity="center"
+            android:textColor="@color/primaryTextColor"
+            android:layout_marginLeft="@dimen/mediumMarginOrPadding"
+            android:layout_marginRight="@dimen/mediumMarginOrPadding"
+            android:layout_marginTop="@dimen/mediumMarginOrPadding"/>
+
+        <EditText
+            android:id="@+id/et_map_address"
+            style="@style/mainRectanglesWithoutElevation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/mediumMarginOrPadding"
+            android:layout_weight="1"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:hint="@string/enter_location_hint"
+            android:paddingLeft="@dimen/mediumMarginOrPadding"
+            android:paddingRight="@dimen/mediumMarginOrPadding"
+            android:textSize="@dimen/smallText" />
+
+        <Button
+            android:id="@+id/btn_map_shuffle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/mediumMarginOrPadding"
+            android:layout_marginRight="@dimen/mediumMarginOrPadding"
+            android:layout_marginTop="@dimen/mediumMarginOrPadding"
+            android:layout_weight="1"
+            style="@style/button_style"
+            android:tag="@string/home_location"
+            android:text="@string/home_current_location_hint" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/setHomeValue"
         android:background="@color/darkone"
-        android:elevation="20dp"
+        android:elevation="35dp"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="225dp"
         android:layout_gravity="bottom"
         android:alpha="0.9"
         android:clipToPadding="false"

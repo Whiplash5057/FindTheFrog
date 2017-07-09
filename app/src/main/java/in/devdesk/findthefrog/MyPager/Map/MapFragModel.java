@@ -1,11 +1,12 @@
 package in.devdesk.findthefrog.MyPager.Map;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import in.devdesk.findthefrog.HeLpEr.RestManager;
 import in.devdesk.findthefrog.MyPager.Map.pojo.MapHomeUpdateRequest;
 import in.devdesk.findthefrog.MyPager.Map.pojo.MapHomeUpdateResponse;
+import in.devdesk.findthefrog.MyPager.Map.pojo.MapNewFrogRequest;
+import in.devdesk.findthefrog.MyPager.Map.pojo.MapNewFrogResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,6 +18,7 @@ import retrofit2.Response;
 public class MapFragModel implements Map_MVP.Model {
 
     private MapHomeUpdateRequest mapHomeUpdateRequest;
+    private MapNewFrogRequest mapNewFrogRequest;
     private RestManager mManager;
     private double lat, lng;
 
@@ -33,6 +35,63 @@ public class MapFragModel implements Map_MVP.Model {
         mManager = new RestManager();
         mapHomeUpdateRequest = new MapHomeUpdateRequest(username, lat, lng);
         callLocationUpdateWebService();
+    }
+
+    @Override
+    public void acceptFrogLatLngToApi(double lat, double lng, String username) {
+        this.lat = lat;
+        this.lng = lng;
+        Log.i("LAt", lat +" is the lat");
+        mManager = new RestManager();
+        mapNewFrogRequest = new MapNewFrogRequest(username, lat, lng);
+        callnewFrogLocationWebService();
+    }
+
+    private void callnewFrogLocationWebService() {
+        Call<MapNewFrogResponse.MainPojo> responseCall = mManager.getmItemService().addNewFrogLocation(mapNewFrogRequest);
+        responseCall.enqueue(new Callback<MapNewFrogResponse.MainPojo>() {
+            String message;
+            String newFrogLocationId;
+            @Override
+            public void onResponse(Call<MapNewFrogResponse.MainPojo> call, Response<MapNewFrogResponse.MainPojo> newResponse) {
+
+                if (newResponse.isSuccessful())
+                {
+//                    Log.e("Success", newResponse.body().getMessage());
+                    message = "success";
+                    newFrogLocationId = newResponse.body().getResponse().getlatLngId();
+
+                }
+                else {
+                    int sc = newResponse.code();
+                    switch (sc) {
+                        case 400:
+//                            Log.e("Error 400", "Bad Request");
+
+                            break;
+                        case 404:
+//                            Log.e("Error 404", "Not Found");
+
+                            break;
+                        case 402:
+//                            Log.e("Error 402", "Enter your correct username and password'");
+
+                            break;
+                        default:
+//                            Log.e("Error", "Generic Error");
+                            break;
+                    }
+                    message = "error";
+                    newFrogLocationId= "";
+                }
+                mapFragPresenter.returnFrogLatLngResponse(lat, lng, message, newFrogLocationId);
+            }
+
+            @Override
+            public void onFailure(Call<MapNewFrogResponse.MainPojo> call, Throwable t) {
+                Log.e("Error", "Something badly went wrong");
+            }
+        });
     }
 
     private void callLocationUpdateWebService() {

@@ -66,6 +66,10 @@ public class MapHelperClasses {
                 mGoogleMaps.addMarker(markerOptions)
                         .showInfoWindow();
             break;
+            case 6:  // just add marker point for home
+                mGoogleMaps.addMarker(markerOptions)
+                        .showInfoWindow();
+                break;
             default:
             break;
         }

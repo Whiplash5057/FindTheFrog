@@ -15,6 +15,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +38,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import in.devdesk.findthefrog.HeLpEr.GeocodingLocation;
 import in.devdesk.findthefrog.HeLpEr.MapHelperClasses;
 import in.devdesk.findthefrog.HeLpEr.Utils;
@@ -64,6 +69,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
     Animation animPopupEnter;
     Animation animPopupExit;
     private String homeLocn;
+    String responseMessage;
+    Snackbar snackbar;
     private LocationManager locationManager;
     private Boolean locationCheck = true;
     private LocationListener locationListener;
@@ -82,10 +89,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
     @BindView(R.id.et_map_homeloc)
     EditText homeLocationEditText;
 
+    @BindView(R.id.et_map_address)
+    EditText locationEditText;
+
 
     //-- onClicks
     @OnClick(R.id.btn_map_homeloc)
-    public void homeLocationClick(View view)
+    public void homeLocationSearch(View view)
     {
         homeLocn = homeLocationEditText.getText().toString();
         if(homeLocn.length() > 0)
@@ -96,6 +106,41 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
 //            Toast.makeText(getActivity(), homeLocn, Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    @OnClick(R.id.btn_map_shuffle)
+    public void homeCurrentLocationSwitch(View view)
+    {
+        String buttonState = (String) view.getTag();
+//        Toast.makeText(getActivity(), buttonState, Toast.LENGTH_SHORT).show();
+
+        if(buttonState == getResources().getString(R.string.home_location)) // home
+        {
+            view.setTag(getResources().getString(R.string.current_location));
+            setHomeLayout.setVisibility(View.GONE);
+            SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
+            double latitude = Utils.getDouble(sharedPrefs, LATITUDE, 0);
+            double longitude = Utils.getDouble(sharedPrefs, LONGITUDE, 0);
+            setUpMapLocation(latitude, longitude, 0);
+        }
+        else
+        {
+            view.setTag(getResources().getString(R.string.home_location));
+            initializeMap();
+        }
+    }
+
+    @OnTextChanged(R.id.et_map_address)
+    public void setFrogLocation(Editable s)
+    {
+        if(s.length() > 0)
+        {
+            String address = locationEditText.getText().toString();
+            GeocodingLocation locationAddress = new GeocodingLocation();
+            locationAddress.getAddressFromLocation(address,
+                    getActivity(), new GeocoderHandler());
+        }
+
     }
 
     //-- methods
@@ -145,9 +190,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
         mGoogleMaps.setIndoorEnabled(true);
         initializeMapListener();
 
-        //-- animation
-        setHomeLayout.setAlpha(1);
-        setHomeLayout.startAnimation(animPopupEnter);
+        SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
+        if(!sharedPrefs.contains(LATITUDE))
+        {
+            //-- animation
+            setHomeLayout.setAlpha(1);
+            setHomeLayout.startAnimation(animPopupEnter);
+        }
+        else
+        {
+            setHomeLayout.setVisibility(View.GONE);
+            double latitude = Utils.getDouble(sharedPrefs, LATITUDE, 0);
+            double longitude = Utils.getDouble(sharedPrefs, LONGITUDE, 0);
+            setUpMapLocation(latitude, longitude, 6);
+        }
+
 
         //-- initialise the map
         initializeMap();
@@ -186,21 +243,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
             @Override
             public void onMapLongClick(LatLng latLng) {
                 SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
+                String username = sharedPrefs.getString(USERNAME, "wrongUser");
                 if(!sharedPrefs.contains(LATITUDE) && isNetworkAvailable(getActivity()))
                 {
 
-                    String username = sharedPrefs.getString(USERNAME, "wrongUser");
+
                     setUpMapLocation(latLng.latitude, latLng.longitude, 1);
                     updateHomeLocationInServer(latLng.latitude, latLng.longitude, username);
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), Utils.getDouble(sharedPrefs, LATITUDE, 000) + "is the latitude", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), Utils.getDouble(sharedPrefs, LATITUDE, 000) + "is the latitude", Toast.LENGTH_SHORT).show();
+//                    double latitude = Utils.getDouble(sharedPrefs, LATITUDE, 0);
+//                    double longitude = Utils.getDouble(sharedPrefs, LONGITUDE, 0);
+//                    setUpMapLocation(latitude, longitude, 6);
+                    setUpMapLocation(latLng.latitude, latLng.longitude, 3);
+                    addNewFrogLocationInServer(latLng.latitude, latLng.longitude, username);
                 }
 
             }
         });
 
+    }
+
+    private void addNewFrogLocationInServer(double latitude, double longitude, String username) {
+        Log.i("LAt", latitude +" is the lat");
+        MapFragPresenter loginFragPresenter = new MapFragPresenter(this);
+        loginFragPresenter.sendnewFrogLatLngToApi( latitude, longitude, username);
     }
 
     private void updateHomeLocationInServer(double latitude, double longitude, String username) {
@@ -222,13 +291,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
-                Toast.makeText(getActivity(), "deny", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "deny", Toast.LENGTH_SHORT).show();
                 locationCheck = false;
             }
             else
             {
-                Toast.makeText(getActivity(), "accept", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "accept", Toast.LENGTH_SHORT).show();
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                setUpMapLocation(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude(), 2);
             }
         }
     }
@@ -245,21 +316,65 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
         CameraPosition Liberty;
 
         // 1 - home / base
-        MarkerOptions markerOptionsHome;
+        MarkerOptions markerOptions;
         // 2. - current location
         // 3. - incomplete walk
         // 4. - complete walk
+        // 6. - just add marker point for home
+        // 7. - just add marker points for unfinished locations
+        // 8. - just add marker points for finished locations
         // def- plain search
 
         switch (locationType) {
             case 1:
                 mapHelperClasses.purpleRedYellowGreen(mGoogleMaps, latitude, longitude);
-                markerOptionsHome = new MarkerOptions()
+                markerOptions = new MarkerOptions()
                         .position(new LatLng(latitude, longitude))
                         .title(getActivity().getString(R.string.user_home_locn))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.home));
-                mGoogleMaps = mapHelperClasses.userMarker(mGoogleMaps, getActivity(), latitude, longitude , 2, markerOptionsHome);
+                mGoogleMaps = mapHelperClasses.userMarker(mGoogleMaps, getActivity(), latitude, longitude , locationType, markerOptions);
+                Liberty = CameraPosition.builder()
+                        .target(new LatLng(latitude, longitude))
+                        .zoom(17).bearing(0)
+                        .tilt(85).build();
+                break;
+            case 2:  // current location
+                markerOptions = new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title(getActivity().getString(R.string.user_locn))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder_map));
+
+
+                mGoogleMaps = mapHelperClasses.userMarker(mGoogleMaps, getActivity(), latitude, longitude , 2, markerOptions);
                 Liberty = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(17).bearing(0).tilt(85).build();
+                break;
+            case 3:  // incomplete walk
+                markerOptions = new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title(getActivity().getString(R.string.incomplete_locn))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.frog_unfound));
+                mGoogleMaps = mapHelperClasses.userMarker(mGoogleMaps, getActivity(), latitude, longitude , locationType, markerOptions);
+                Liberty = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(19).bearing(0).tilt(85).build();
+                break;
+            case 4:  // complete walk
+                markerOptions = new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title(getActivity().getString(R.string.complete_locn))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.frog_found));
+                mGoogleMaps = mapHelperClasses.userMarker(mGoogleMaps, getActivity(), latitude, longitude , locationType, markerOptions);
+                Liberty = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(17).bearing(0).tilt(85).build();
+                break;
+            case 6:
+                mapHelperClasses.purpleRedYellowGreen(mGoogleMaps, latitude, longitude);
+                markerOptions = new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title(getActivity().getString(R.string.user_home_locn))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.home));
+                mGoogleMaps = mapHelperClasses.userMarker(mGoogleMaps, getActivity(), latitude, longitude , locationType, markerOptions);
+                Liberty = CameraPosition.builder()
+                        .target(new LatLng(latitude, longitude))
+                        .zoom(17).bearing(0)
+                        .tilt(85).build();  //not usefull for this case.
                 break;
             default:
                 Liberty = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(17).bearing(0).tilt(85).build();
@@ -267,13 +382,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
         }
 
 
-        Toast.makeText(getActivity(), latitude + " " + longitude + " " + locationType, Toast.LENGTH_SHORT).show();
-        mGoogleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
+        if(locationType < 6)
+        {
+            mGoogleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
+        }
+
+
     }
 
     @Override
     public void showResponseValue(double lat, double lng, String message) {
-        String responseMessage;
+
         if(message == "success")
         {
             SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
@@ -292,6 +411,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     setHomeLayout.setAlpha(0);
+                    setHomeLayout.setVisibility(View.GONE);
+                    snackbar = Snackbar.make(setHomeBtn , responseMessage, Snackbar.LENGTH_SHORT);
+                    snackbar.addCallback(new Snackbar.Callback(){
+
+                    });
+                    View sb = snackbar.getView();
+                    TextView tv = (TextView) sb.findViewById(android.support.design.R.id.snackbar_text);
+                    tv.setTextColor(ContextCompat.getColor(getContext(), R.color.ascentTextColor));
+                    tv.setHeight(160);
+                    tv.setTextSize(18);
+                    snackbar.show();
                 }
 
                 @Override
@@ -304,7 +434,32 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
         {
             responseMessage = "Sorry, something went wrong:-(";
         }
-        Snackbar snackbar = Snackbar.make(setHomeBtn , responseMessage, Snackbar.LENGTH_SHORT);
+
+    }
+
+    @Override
+    public void showFrogLatLngResponse(double lat, double lng, String message, String newFrogLocationId) {
+        if(message == "success")
+        {
+            SharedPreferences sharedPrefs = getActivity().getSharedPreferences(LOGINSHAREDP, Context.MODE_PRIVATE);
+            Set<String> set = new HashSet<String>();
+            set.add(Double.toString(lat));
+            set.add(Double.toString(lng));
+            SharedPreferences.Editor ed = sharedPrefs.edit();
+            ed.putStringSet(newFrogLocationId, set);
+            ed.apply();
+//            Set<String> fetch = editor.getStringSet("List", null);
+//            for(int i = 0 ; i < list.size() ; i++){
+//            Log.d("fetching values", "fetch value " + list.get(i));
+//              }
+
+            responseMessage = "New frog added! You have 7 days to get it.";
+        }
+        else
+        {
+            responseMessage = "Sorry, something went wrong:-(";
+        }
+        snackbar = Snackbar.make(setHomeBtn , responseMessage, Snackbar.LENGTH_SHORT);
 //        snackbar.addCallback(new Snackbar.Callback(){
 //
 //        });
@@ -330,9 +485,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
                     editTextLng = bundle.getDouble("longitude");
                     if(editTextLat != null && editTextLng != null)
                     {
-                        Toast.makeText(getActivity(), editTextLat.toString() + " " + editTextLng.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), editTextLat.toString() + " " + editTextLng.toString(), Toast.LENGTH_SHORT).show();
                         setUpMapLocation(editTextLat, editTextLng, 0);
-
                     }
 
                     break;
@@ -343,4 +497,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Map_MVP
 
         }
     }
+
 }
