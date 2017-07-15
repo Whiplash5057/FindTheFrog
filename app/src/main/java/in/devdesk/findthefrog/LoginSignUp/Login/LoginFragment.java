@@ -131,8 +131,8 @@ public class LoginFragment extends Fragment implements Login_MVP.View{
         View sb = snackbar.getView();
         TextView tv = (TextView) sb.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(ContextCompat.getColor(getContext(), R.color.ascentTextColor));
-        tv.setHeight(160);
-        tv.setTextSize(20);
+        tv.setHeight(170);
+        tv.setTextSize(16);
         snackbar.show();
     }
 

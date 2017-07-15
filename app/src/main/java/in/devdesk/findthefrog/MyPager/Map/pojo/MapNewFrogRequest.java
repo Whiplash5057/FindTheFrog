@@ -16,10 +16,14 @@ public class MapNewFrogRequest  implements Serializable {
     @Expose
     private double lng;
 
-    public MapNewFrogRequest(String username, double lat, double lng) {
+    @Expose
+    private String locationName;
+
+    public MapNewFrogRequest(String username, double lat, double lng, String reverseGeoString) {
         this.username = username;
         this.lat = lat;
         this.lng = lng;
+        locationName = reverseGeoString;
     }
 
     public String getUsername() {
@@ -34,4 +38,7 @@ public class MapNewFrogRequest  implements Serializable {
         return lng;
     }
 
+    public String getReverseGeoString() {
+        return locationName;
+    }
 }

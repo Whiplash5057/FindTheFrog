@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/smallMarginOrPadding">
+
+    <ImageView
+        android:id="@+id/itemPhoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:padding="@dimen/largeMarginOrPadding"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/mediumMarginOrPadding">
+
+
+        <TextView
+            android:id="@+id/lbl_itemName_row"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Large Text"
+            android:textSize="@dimen/smallText"
+            android:maxLines="1"
+            android:minLines="1"
+            android:lines="1"
+            android:gravity="bottom"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/lbl_itemDaysLeft_row"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Medium Text"
+            android:maxLines="1"
+            android:minLines="1"
+            android:lines="1"
+            android:textSize="@dimen/smallText"
+            android:gravity="top"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+</LinearLayout>

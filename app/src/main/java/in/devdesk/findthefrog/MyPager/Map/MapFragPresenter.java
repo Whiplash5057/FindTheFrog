@@ -1,7 +1,9 @@
 package in.devdesk.findthefrog.MyPager.Map;
 
-import android.location.LocationListener;
-import android.util.Log;
+
+import java.util.List;
+
+import in.devdesk.findthefrog.MyPager.Other.pojo.AllFrogsResponse;
 
 /**
  * Created by richardandrews on 09/07/17.
@@ -26,13 +28,39 @@ public class MapFragPresenter implements Map_MVP.Presenter{
     }
 
     @Override
-    public void sendnewFrogLatLngToApi(double lat, double lng, String username) {
+    public void sendnewFrogLatLngToApi(double lat, double lng, String username, String reverseGeoString) {
         MapFragModel mapFragModel = new MapFragModel(this);
-        mapFragModel.acceptFrogLatLngToApi(lat, lng, username);
+//        Log.i("LAtt", reverseGeoString);
+        mapFragModel.acceptFrogLatLngToApi(lat, lng, username, reverseGeoString);
     }
 
     @Override
-    public void returnFrogLatLngResponse(double lat, double lng, String message, String newFrogLocationId) {
-        mapFragment.showFrogLatLngResponse(lat, lng, message, newFrogLocationId);
+    public void returnFrogLatLngResponse(double lat, double lng, String message, String newFrogLocationId, String locationName, String dateTime) {
+//        Log.d("Latiti", "pres" + lat);
+//        Log.d("Longigi", "pres" + lng);
+        mapFragment.showFrogLatLngResponse(lat, lng, message, newFrogLocationId, locationName, dateTime);
+
+    }
+
+    @Override
+    public void sendFrogFoundToApi(String markerId, String username) {
+        MapFragModel mapFragModel = new MapFragModel(this);
+        mapFragModel.acceptFrogFoundToApi(markerId, username);
+    }
+
+    @Override
+    public void returnFrogFoundResponse(String message, String markerId, int streakLength, int totalScore) {
+        mapFragment.showFrogFoundResponse(message, markerId, streakLength, totalScore);
+    }
+
+    @Override
+    public void sendUserDataForFrogList(String username, String authToken) {
+        MapFragModel mapFragModel = new MapFragModel(this);
+        mapFragModel.acceptUserDataForFrogList(username, authToken);
+    }
+
+    @Override
+    public void returnUserDataForFrogListResponse(String message, List<AllFrogsResponse.Response> responsePojo) {
+        mapFragment.showUserDataForFrogList(message, responsePojo);
     }
 }

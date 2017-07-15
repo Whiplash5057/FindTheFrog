@@ -16,6 +16,27 @@ public class MapNewFrogResponse{
         @Expose
         private String message;
         @Expose
+        private String locationName;
+        @Expose
+        private String dateTime;
+
+        public String getLocationName() {
+            return locationName;
+        }
+
+        public void setLocationName(String locationName) {
+            this.locationName = locationName;
+        }
+
+        public String getDateTime() {
+            return dateTime;
+        }
+
+        public void setDateTime(String dateTime) {
+            this.dateTime = dateTime;
+        }
+
+        @Expose
         private MapNewFrogResponse.ResponsePojo response;
 
         public MapNewFrogResponse.ResponsePojo getResponse() {

@@ -1,14 +1,304 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="bottom"
+    app:umanoPanelHeight="40dp"
+    app:umanoShadowHeight="20dp">
 
-    <TextView
-        android:id="@+id/lbl_pager_item_content"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="PROFILE"
-        android:gravity="center" />
+        android:background="@android:color/white">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_topcontainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.github.florent37.diagonallayout.DiagonalLayout
+                    android:id="@+id/diagonalLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@android:color/white"
+                    app:diagonal_angle="10"
+                    app:diagonal_direction="left"
+                    app:diagonal_handleMargins="true"
+                    app:diagonal_position="bottom">
+
+                    <com.flaviofaria.kenburnsview.KenBurnsView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/freepick" />
+
+                    <TextView
+                        android:id="@+id/tv_username_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|left"
+                        android:layout_marginLeft="@dimen/largeMarginOrPadding"
+                        android:layout_marginTop="70dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Hugh Jackman"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/largeText" />
+
+                    <TextView
+                        android:id="@+id/tv_usernamelevel_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/largeMarginOrPadding"
+                        android:layout_marginTop="105dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="ACTOR"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/smallText"
+                        android:textStyle="bold" />
+
+
+                </com.github.florent37.diagonallayout.DiagonalLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/largeMarginOrPadding"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/circle"
+                            android:elevation="8dp"
+                            android:padding="@dimen/smallMarginOrPadding"
+                            android:src="@drawable/frog_found" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/diagonalLayout"
+                        android:layout_marginRight="@dimen/largeMarginOrPadding"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SCORE"
+                            android:textSize="@dimen/smallText" />
+
+                        <TextView
+                            android:id="@+id/tv_userscore_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="15200923"
+                            android:textSize="@dimen/mediumText"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_profile_newwalk"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/ll_topcontainer"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle"
+                android:padding="@dimen/mediumMarginOrPadding"
+                android:src="@drawable/ic_plus" />
+
+            <TextView
+                android:id="@+id/tv_profile_newwalk"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/iv_profile_newwalk"
+                android:gravity="center"
+                android:text="Add a new walk"
+                android:textSize="@dimen/mediumText" />
+
+            <View
+                android:id="@+id/view_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tv_profile_newwalk"
+                android:layout_margin="@dimen/largeMarginOrPadding"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_profile_walkhistory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/view_separator"
+                android:gravity="center"
+                android:text="Walk History..."
+                android:textSize="@dimen/largeText" />
+
+            <RelativeLayout
+                android:id="@+id/rv_profile_nv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_profile_walkhistory"
+                android:layout_margin="@dimen/largeMarginOrPadding">
+
+                <TextView
+                    android:id="@+id/tv_nv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/tv_nv_value"
+                    android:text="@string/nxt_wlk_title"
+                    android:textSize="@dimen/mediumText" />
+
+                <TextView
+                    android:id="@+id/tv_nv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/tv_nv_value"
+                    android:layout_below="@id/tv_nv_title"
+                    android:text="@string/nxt_wlk_addr"
+                    android:textSize="@dimen/smallText" />
+
+                <TextView
+                    android:id="@+id/tv_nv_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="7"
+                    android:textSize="@dimen/largeText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rv_profile_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_profile_nv"
+                android:layout_margin="@dimen/largeMarginOrPadding">
+
+                <TextView
+                    android:id="@+id/tv_lv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/tv_lv_value"
+                    android:text="@string/lst_wlk_title"
+                    android:textSize="@dimen/mediumText" />
+
+                <TextView
+                    android:id="@+id/tv_lv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/tv_lv_value"
+                    android:layout_below="@id/tv_lv_title"
+                    android:text="@string/lst_wlk_addr"
+                    android:textSize="@dimen/smallText" />
+
+                <TextView
+                    android:id="@+id/tv_lv_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="14"
+                    android:textSize="@dimen/largeText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rv_profile_streak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_profile_lv"
+                android:layout_margin="@dimen/largeMarginOrPadding">
+
+                <TextView
+                    android:id="@+id/tv_streak_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/tv_streak_value"
+                    android:text="@string/longest_streak"
+                    android:textSize="@dimen/mediumText" />
+
+                <TextView
+                    android:id="@+id/tv_streak_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/tv_streak_value"
+                    android:layout_below="@id/tv_streak_title"
+                    android:text="@string/number_of_weeks"
+                    android:textSize="@dimen/smallText" />
+
+                <TextView
+                    android:id="@+id/tv_streak_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="4"
+                    android:textSize="@dimen/largeText" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ultralight"
+        android:clickable="true"
+        android:focusable="false"
+        android:orientation="vertical"
+        android:padding="@dimen/smallMarginOrPadding">
+
+        <ImageView
+            android:id="@+id/btn_hideshow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_hide_show" />
+
+    </LinearLayout>
+
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
